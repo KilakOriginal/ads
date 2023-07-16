@@ -1,6 +1,5 @@
-#include<iostream>
+#include <iostream>
 #include <vector>
-#include "Ds.hpp"
 #include "sorting.cpp"
 #include "Ds.cpp"
 

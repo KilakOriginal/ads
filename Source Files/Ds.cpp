@@ -1,4 +1,4 @@
-#include "Ds.hpp"
+#include "../Header Files/Ds.hpp"
 #include <stdexcept>
 #include <vector>
 
@@ -45,6 +45,9 @@ T Stack<T>::pop() {
 	this->is_empty = this->elements.empty();
 	return element;
 }
+
+template<typename T>
+int Stack<T>::size() { return this->elements.size(); }
 
 template<typename T>
 bool Stack<T>::empty() {
@@ -95,7 +98,7 @@ LinkedList<T>::~LinkedList<T>() {
 template<typename T>
 void LinkedList<T>::append(T element) {
 
-	Node<T>* new_node = new Node(element);
+	Node<T>* new_node = new Node<T>(element);
 	Node<T>* current_node = this->head;
 
 	while (current_node->get_next() != nullptr) {

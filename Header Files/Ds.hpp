@@ -26,6 +26,7 @@ public:
 	// Getter function
 	T top(); // Get first element on stack
 	T pop(); // Get first element on stack and remove it
+	int size(); // Get the stack's current size
 	std::string to_string(); // String representation of the stack
 
 	// Test functions
