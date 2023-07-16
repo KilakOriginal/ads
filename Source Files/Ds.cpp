@@ -1,6 +1,5 @@
 #include "../Header Files/Ds.hpp"
 #include <stdexcept>
-#include <vector>
 
 /*
  * ====================
@@ -171,6 +170,24 @@ T LinkedList<T>::last() {
 	if (!current_size) { throw std::invalid_argument("No elements in list."); }
 
 	return this->tail->get_previous()->get_data();
+}
+
+template<typename T>
+std::string LinkedList<T>::to_string() {
+
+	std::ostringstream s;
+	Node<T>* current_node = this->head;
+
+	s << "[";
+	for (int i = 1; i < this->current_size; i++) {
+		current_node = current_node->get_next();
+		s << current_node->get_data();
+		s << ", ";
+	}
+	s << this->tail->get_previous()->get_data();
+	s << "]";
+
+	return s.str();
 }
 
 template<typename T>

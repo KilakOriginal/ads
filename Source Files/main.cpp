@@ -35,12 +35,12 @@ int main(int argc, char** argv) {
 	list.append(2);
 	list.append(12);
 
-	std::cout << list.get(0) << ", " << list.get(1) << ", " << list.get(2) << std::endl;
+	std::cout << list.to_string() << std::endl;
 
 	list.pop_back();
 	list.append(80);
 
-	std::cout << list.get(0) << ", " << list.get(1) << ", " << list.get(2) << std::endl;
+	std::cout << list.to_string() << std::endl;
 
 	return 0;
 }
