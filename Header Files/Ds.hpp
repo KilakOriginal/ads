@@ -6,6 +6,7 @@
 #include <iterator>
 #include <vector>
 #include <initializer_list>
+#include <cstring>
 
 template<typename T>
 class Stack {
@@ -13,7 +14,9 @@ class Stack {
 private:
 	// Fields
 	bool is_empty;
-	std::vector<T> elements;
+	int max_size;
+	int current_size;
+	T* elements;
 public:
 	// Constructors and Destructors
 	Stack(); // Initialise empty stack
@@ -28,6 +31,7 @@ public:
 	T pop(); // Get first element on stack and remove it
 	int size(); // Get the stack's current size
 	std::string to_string(); // String representation of the stack
+	int debug_get_max_size() { return this->max_size; }
 
 	// Test functions
 	bool empty(); // Returns true if stack is empty
@@ -87,6 +91,7 @@ private:
 		T get(int);
 		T first();
 		T last();
+		std::string to_string();
 
 		// Test functions
 		bool empty();

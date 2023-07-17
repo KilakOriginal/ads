@@ -9,56 +9,78 @@
 
 template<typename T>
 Stack<T>::Stack() 
-: is_empty(true), elements(std::vector<T>()) { }
+: max_size(1), current_size(0), elements(new T[1]) { }
 
 template<typename T>
 Stack<T>::Stack(std::initializer_list<T> elements)
-: is_empty(true), elements(std::vector<T>()) {
+: max_size(pow(2, ceil(log2(elements.size())))), elements(new T[this->max_size]) {
 
-	for (T element : elements) {
-		this->push(element);
+	this->current_size = elements.size();
+	for (int i = 0; i < this->current_size; i++) {
+		this->elements[i] = elements[i];
 	}
 }
 
 template<typename T>
-Stack<T>::~Stack() { }
+Stack<T>::~Stack() {
+	delete[] this->elements;
+}
 
 template<typename T>
 void Stack<T>::push(T element) {
 
-	this->elements.push_back(element);
-	this->is_empty = false;
+	if (this->current_size >= this->max_size) {
+		T* new_array = new T[this->max_size*2];
+		memcpy(new_array, this->elements, this->max_size*2*sizeof(T));
+		delete[] this->elements;
+		this->elements = new_array;
+		this->max_size *= 2;
+	}
+
+	this->elements[current_size] = element;
+	this->current_size ++;
 }
 
 template<typename T>
 T Stack<T>::top() {
 
-	return this->elements[this->elements.size() - 1];
+	return this->elements[current_size-1];
 }
 
 template<typename T>
 T Stack<T>::pop() {
 
-	T element = this->top();
-	this->elements.pop_back();
-	this->is_empty = this->elements.empty();
-	return element;
+	T return_value = this->elements[this->current_size-1];
+	if (this->current_size <= this->max_size * 0.25) {
+		T* new_array = new T[this->max_size/2];
+		memcpy(new_array, this->elements, this->max_size*2*sizeof(T));
+		delete[] this->elements;
+		this->elements = new_array;
+		this->max_size/=2;
+	}
+
+	this->current_size--;
+
+	return return_value;
 }
 
 template<typename T>
-int Stack<T>::size() { return this->elements.size(); }
+int Stack<T>::size() { return this->current_size; }
 
 template<typename T>
 bool Stack<T>::empty() {
 
-	return this->elements.empty();
+	return this->current_size == 0 ? true:false;
 }
 
 template<typename T>
 std::string Stack<T>::to_string() {
 
 	std::stringstream s;
-	std::copy(this->elements.begin(), this->elements.end(), std::ostream_iterator<T>(s, std::string(", ").c_str()));
+	for (int i = 0; i < this->current_size; i++) {
+		s << this->elements[i];
+		s << ", ";
+	}
 	std::string output = s.str();
 	return std::string("[" + output.substr(0, output.size()-2) + "]");
 }
@@ -178,16 +200,15 @@ std::string LinkedList<T>::to_string() {
 	std::ostringstream s;
 	Node<T>* current_node = this->head;
 
-	s << "[";
-	for (int i = 1; i < this->current_size; i++) {
+	for (int i = 0; i < this->current_size; i++) {
 		current_node = current_node->get_next();
 		s << current_node->get_data();
 		s << ", ";
 	}
-	s << this->tail->get_previous()->get_data();
-	s << "]";
+	
+	std::string output = s.str();
 
-	return s.str();
+	return std::string("[" + output.substr(0, output.size()-2) + "]");
 }
 
 template<typename T>

@@ -19,17 +19,19 @@ int main(int argc, char** argv) {
 		printf("%d ", mySortedVector[i]);
 	}
 	printf("\r\n");
-
-	Stack<int> stack = Stack<int>();
-	stack.push(23);
-	stack.push(19);
-	std::cout << stack.to_string() << std::endl;
-	stack.pop();
-	std::cout << stack.to_string() << std::endl;
-	stack.push(78);
-	std::cout << stack.to_string() << std::endl;
 	*/
 
+	Stack<int> stack;
+	stack.push(23);
+	std::cout << stack.to_string() << " " << stack.debug_get_max_size() << std::endl;
+	stack.push(19);
+	std::cout << stack.to_string() << " " << stack.debug_get_max_size() << std::endl;
+	stack.pop();
+	std::cout << stack.to_string() << " " << stack.debug_get_max_size() << std::endl;
+	stack.push(78);
+	std::cout << stack.to_string() << " " << stack.debug_get_max_size() << std::endl;
+
+	/*
 	LinkedList<int> list;
 	list.append(56);
 	list.append(2);
@@ -41,6 +43,7 @@ int main(int argc, char** argv) {
 	list.append(80);
 
 	std::cout << list.to_string() << std::endl;
+	*/
 
 	return 0;
 }
