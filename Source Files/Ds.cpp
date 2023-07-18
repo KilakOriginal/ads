@@ -1,5 +1,4 @@
 #include "../Header Files/Ds.hpp"
-#include <stdexcept>
 
 /*
  * ====================
@@ -93,11 +92,17 @@ std::string Stack<T>::to_string() {
 
 template<typename T>
 LinkedList<T>::LinkedList() 
-: head(new Node<T>()), tail(new Node<T>()), current_size(0) { }
+: head(new Node<T>()), tail(new Node<T>()), current_size(0) {
+	this->head->set_next(this->tail);
+	this->tail->set_previous(this->head);
+}
 
 template<typename T>
 LinkedList<T>::LinkedList(std::initializer_list<T> elements)
 : head(new Node<T>()), tail(new Node<T>()), current_size(0) {
+
+	this->head->set_next(this->tail);
+	this->tail->set_previous(this->head);
 
 	for (T element : elements) {
 		this->append(element);
@@ -108,23 +113,20 @@ template<typename T>
 LinkedList<T>::~LinkedList<T>() {
 
 	Node<T>* current_node = this->head;
-	for (int i = 0; i < this->current_size; i++) {
+	for (int i = -1; i < this->current_size; i++) {
 
 		Node<T>* temp = current_node->get_next();
+		std::cout << "Deleting: " << current_node->get_data() << std::endl;
 		delete current_node;
 		current_node = temp;
-	}
+	} delete this->tail;
 }
 
 template<typename T>
 void LinkedList<T>::append(T element) {
 
 	Node<T>* new_node = new Node<T>(element);
-	Node<T>* current_node = this->head;
-
-	while (current_node->get_next() != nullptr) {
-		current_node = current_node->get_next();
-	}
+	Node<T>* current_node = this->tail->get_previous();
 
 	new_node->set_previous(current_node);
 	current_node->set_next(new_node);
@@ -138,7 +140,7 @@ T LinkedList<T>::pop_back() {
 	if (!this->current_size) { throw std::invalid_argument("pop_back() not defined for empty list."); }
 
 	T value = this->tail->get_previous()->get_data();
-	Node<T>* previous_node = this->tail->get_previous()->get_previous() == this->head ? nullptr:this->tail->get_previous()->get_previous();
+	Node<T>* previous_node = this->tail->get_previous()->get_previous();
 	delete this->tail->get_previous();
 	this->tail->set_previous(previous_node);
 	this->current_size--;
@@ -152,7 +154,7 @@ T LinkedList<T>::pop_front() {
 	if (!this->current_size) { throw std::invalid_argument("pop_front() not defined for empty list."); }
 
 	T value = this->head->get_next()->get_data();
-	Node<T>* next_node = this->head->get_next()->get_next() == this->tail ? nullptr:this->head->get_next()->get_next();
+	Node<T>* next_node = this->head->get_next()->get_next();
 	delete this->head->get_next();
 	this->head->set_next(next_node);
 	this->current_size--;
@@ -163,19 +165,6 @@ T LinkedList<T>::pop_front() {
 template<typename T>
 int LinkedList<T>::size() {
 	return this->current_size;
-}
-
-template<typename T>
-T LinkedList<T>::get(int index) {
-	
-	if (index >= current_size) { throw std::invalid_argument("Index Out Of Range."); }
-
-	Node<T>* current_node = this->head->get_next();
-	for (int i = 0; i < index; i++) {
-		current_node = current_node->get_next();
-	}
-
-	return current_node->get_data();
 }
 
 template<typename T>
@@ -214,3 +203,15 @@ std::string LinkedList<T>::to_string() {
 template<typename T>
 bool LinkedList<T>::empty() { return this->current_size > 0 ? true:false; }
 
+template<typename T>
+T& LinkedList<T>::operator[](int index) {
+
+	if (index >= current_size) { throw std::invalid_argument("Index Out Of Range."); }
+
+	Node<T>* current_node = this->head->get_next();
+	for (int i = 0; i < index; i++) {
+		current_node = current_node->get_next();
+	}
+
+	return current_node->get_data();
+}

@@ -7,6 +7,7 @@
 #include <vector>
 #include <initializer_list>
 #include <cstring>
+#include <stdexcept>
 
 template<typename T>
 class Stack {
@@ -61,7 +62,7 @@ private:
 		// Getter functions
 		Node<D>* get_next() { return this->next; }
 		Node<D>* get_previous() { return this->previous; }
-		D get_data() { return this->data; }
+		D& get_data() { return this->data; }
 		
 		// Setter functions
 		void set_next(Node<D>* next) { this->next = next; }
@@ -88,14 +89,15 @@ private:
 
 		// Getter functions
 		int size();
-		T get(int);
 		T first();
 		T last();
 		std::string to_string();
 
 		// Test functions
 		bool empty();
+
+		// Operators
+		T& operator[](int);
 };
 
 #endif
-

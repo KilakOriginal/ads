@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include "sorting.cpp"
 #include "Ds.cpp"
 
@@ -19,7 +18,6 @@ int main(int argc, char** argv) {
 		printf("%d ", mySortedVector[i]);
 	}
 	printf("\r\n");
-	*/
 
 	Stack<int> stack;
 	stack.push(23);
@@ -30,8 +28,8 @@ int main(int argc, char** argv) {
 	std::cout << stack.to_string() << " " << stack.debug_get_max_size() << std::endl;
 	stack.push(78);
 	std::cout << stack.to_string() << " " << stack.debug_get_max_size() << std::endl;
+	*/
 
-	/*
 	LinkedList<int> list;
 	list.append(56);
 	list.append(2);
@@ -39,11 +37,23 @@ int main(int argc, char** argv) {
 
 	std::cout << list.to_string() << std::endl;
 
-	list.pop_back();
+	list.pop_front();
 	list.append(80);
 
 	std::cout << list.to_string() << std::endl;
-	*/
+
+	list[2] = 10;
+
+	std::cout << list.to_string() << std::endl;
+
+	list.pop_back();
+	std::cout << list.to_string() << std::endl;
+
+	list.pop_front();
+	std::cout << list.to_string() << std::endl;
+
+	list.pop_front();
+	std::cout << list.to_string() << std::endl;
 
 	return 0;
 }
