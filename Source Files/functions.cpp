@@ -1,37 +1,18 @@
-#include <stdexcept>
-#include <string>
 #include <tuple>
-#include <vector>
 #include "Ds.cpp"
 
 namespace fn {
-	typedef std::vector<std::string> args;
-	typedef std::tuple<std::string, short, args> call_tuple;
+	typedef std::tuple<std::string, short, std::vector<std::string>> call_tuple;
 	typedef Stack<call_tuple> call_stack;
 
-	int fibonacci(uint n) {
-		call_stack stack;
-		stack.push(call_tuple("fibonacci", 0, args(n)));
-		int result = -1;
-		while (!stack.empty()) {
-			std::string func; short margs; args fargs;  
-			std::tie(func, margs, fargs) = stack.pop();
+	std::size_t fibonacci(int sequence_number) {
+		std::size_t n = 0;
+		std::size_t m = 1;
 
-			if (func == "fibonacci") {
-				//...
-			}
-			else if (func == "+") {
-				//...
-			}
-			else if (func == "return") {
-				//...
-			}
-			else { throw std::invalid_argument("Undefined function."); }
-
-			if (result >= 0 and !stack.empty()) {
-				//...
-			}
+		for (int i = 1; i < sequence_number; i++) {
+			m = n+m;
+			n = m-n;
 		}
-		return result;
+		return n;
 	}
 }
