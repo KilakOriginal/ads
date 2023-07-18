@@ -57,6 +57,8 @@ private:
 		: next(nullptr), previous(nullptr) { }
 		Node(D data) 
 		: data(data), next(nullptr), previous(nullptr) { }
+		Node(Node<D>* node)
+		: data(node->data), next(nullptr), previous(nullptr) { }
 		~Node() { }
 
 		// Getter functions
@@ -98,6 +100,7 @@ private:
 
 		// Operators
 		T& operator[](int);
+		LinkedList operator+=(const LinkedList&);
 };
 
 #endif

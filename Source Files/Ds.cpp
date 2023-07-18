@@ -116,7 +116,6 @@ LinkedList<T>::~LinkedList<T>() {
 	for (int i = -1; i < this->current_size; i++) {
 
 		Node<T>* temp = current_node->get_next();
-		std::cout << "Deleting: " << current_node->get_data() << std::endl;
 		delete current_node;
 		current_node = temp;
 	} delete this->tail;
@@ -214,4 +213,21 @@ T& LinkedList<T>::operator[](int index) {
 	}
 
 	return current_node->get_data();
+}
+
+template<typename T>
+LinkedList<T> LinkedList<T>::operator+=(const LinkedList& other) {
+
+	Node<T>* current_node = other.head->get_next();
+	Node<T>* end = this->tail->get_previous();
+
+	for (int i = 0; i < other.current_size; i++) {
+		Node<T>* new_node = new Node<T>(current_node);
+		new_node->set_previous(end);
+		end->set_next(new_node);
+		current_node = current_node->get_next();
+		end = end->get_next();
+	}
+
+	this->current_size += other.current_size;
 }

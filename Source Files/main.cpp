@@ -55,6 +55,18 @@ int main(int argc, char** argv) {
 	list.pop_front();
 	std::cout << list.to_string() << std::endl;
 
+	list.append(1);
+	list.append(2);
+	list.append(3);
+
+	LinkedList<int> list2{4, 5, 6};
+	std::cout << list.to_string() << std::endl;
+	std::cout << list2.to_string() << std::endl;
+
+	list += list2;
+
+	std::cout << list.to_string() << std::endl;
+
 	return 0;
 }
 
