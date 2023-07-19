@@ -27,10 +27,12 @@ A `LinkedList` in this instance, is a double linked list.
 * `pop_back()` removes the list's last element and returns its value.
 * `pop_front()` removes the list's first element and returns its value.
 * `size()` returns the size of the list.
-* `get(i)` returns the data contained within the i-th node of the list.
 * `first()` returns the data contained within the first node of the list.
 * `last()` returns the data contained within the last node of the list.
 * `empty()` returns `true` if the list is empty, `false` otherwise.
+* `[i]` access the i-th value in the list.
+* `begin()` returns the `LinkedList<T>::Iterator` for the first element of the the list.
+* `end()` returns the `LinkedList<T>::Iterator` past the last element of the the list.
 
 ## Algorithms
 ### Insertion Sort

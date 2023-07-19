@@ -68,5 +68,10 @@ int main(int argc, char** argv) {
 		std::cout << number << std::endl;
 	}
 
+	for (LinkedList<int>::Iterator it = list.begin(); it != list.end(); it++) {
+
+		std::cout << *it << std::endl;
+	}
+
 	return 0;
 }
