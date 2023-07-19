@@ -63,10 +63,10 @@ int main(int argc, char** argv) {
 	std::cout << list.to_string() << std::endl;
 	std::cout << list2.to_string() << std::endl;
 
-	list += list2;
+	for (int number : list) {
 
-	std::cout << list.to_string() << std::endl;
+		std::cout << number << std::endl;
+	}
 
 	return 0;
 }
-

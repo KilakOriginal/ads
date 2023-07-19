@@ -20,7 +20,7 @@ private:
 	T* elements;
 public:
 	// Constructors and Destructors
-	Stack(); // Initialise empty stack
+	Stack() noexcept; // Initialise empty stack
 	Stack(std::initializer_list<T>); // Initialise stack and push variable number of arguments
 	~Stack(); // Free-up memory
 	
@@ -42,7 +42,8 @@ template<typename T>
 class LinkedList {
 
 // Internal classes
-private:
+public:
+	// Nodes for storing data
 	template<typename D>
 	class Node {
 
@@ -53,11 +54,11 @@ private:
 		Node<D>* previous;
 	public:
 		// Constructors / Destructors
-		Node() 
+		Node() noexcept
 		: next(nullptr), previous(nullptr) { }
-		Node(D data) 
+		Node(D data) noexcept
 		: data(data), next(nullptr), previous(nullptr) { }
-		Node(Node<D>* node)
+		Node(Node<D>* node) noexcept
 		: data(node->data), next(nullptr), previous(nullptr) { }
 		~Node() { }
 
@@ -72,6 +73,60 @@ private:
 		void set_data(D data) { this->data = data; }
 
 	};
+
+	// Iterator class for convenience
+	class Iterator {
+
+	private:
+		Node<T>* current_node;
+	public:
+		Iterator() noexcept
+		: current_node(head->get_next()) { }
+		Iterator(Node<T>* node) noexcept
+		: current_node(node) { }
+
+		// Prefix ++
+		Iterator& operator++() { 
+
+			if (this->current_node) { this->current_node = this->current_node->get_next(); }
+			return *this;
+		}
+		// Postfix ++
+		Iterator operator++(int) {
+
+			Iterator iterator = *this;
+			++*this;
+			return iterator;
+		}
+		// Prefix --
+		Iterator& operator--() { 
+
+			if (this->current_node) { this->current_node = this->current_node->previous; }
+			return *this;
+		}
+		// Postfix --
+		Iterator operator--(int) {
+
+			Iterator iterator = *this;
+			--*this;
+			return iterator;
+		}
+		Iterator& operator=(Node<T>* node) { 
+			
+			this->current_node = node;
+			return *this;
+		}
+		bool operator!=(const Iterator& iterator) { 
+			
+			return this->current_node != iterator.current_node;
+		}
+		bool operator==(const Iterator& iterator) { 
+			
+			return this->current_node == iterator.current_node;
+		}
+		T operator*() { return this->current_node->get_data(); }
+		Node<T>* operator->() { return this->current_node; }
+	};
 	private:
 		// Fields
 		Node<T>* head;
@@ -80,7 +135,7 @@ private:
 
 	public:
 		// Constructors / Destructors
-		LinkedList();
+		LinkedList() noexcept;
 		LinkedList(std::initializer_list<T>);
 		~LinkedList();
 
@@ -98,9 +153,12 @@ private:
 		// Test functions
 		bool empty();
 
-		// Operators
+		// Operators and Utility
 		T& operator[](int);
-		LinkedList operator+=(const LinkedList&);
+		//LinkedList operator+=(const LinkedList&);
+
+		Iterator begin() { return Iterator(this->head->get_next()); }
+		Iterator end() { return Iterator(nullptr); }
 };
 
 #endif

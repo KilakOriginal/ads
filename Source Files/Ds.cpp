@@ -7,7 +7,7 @@
  */
 
 template<typename T>
-Stack<T>::Stack() 
+Stack<T>::Stack() noexcept
 : max_size(1), current_size(0), elements(new T[1]) { }
 
 template<typename T>
@@ -91,7 +91,7 @@ std::string Stack<T>::to_string() {
  */
 
 template<typename T>
-LinkedList<T>::LinkedList() 
+LinkedList<T>::LinkedList() noexcept
 : head(new Node<T>()), tail(new Node<T>()), current_size(0) {
 	this->head->set_next(this->tail);
 	this->tail->set_previous(this->head);
@@ -215,7 +215,7 @@ T& LinkedList<T>::operator[](int index) {
 	return current_node->get_data();
 }
 
-template<typename T>
+/*template<typename T>
 LinkedList<T> LinkedList<T>::operator+=(const LinkedList& other) {
 
 	Node<T>* current_node = other.head->get_next();
@@ -230,4 +230,4 @@ LinkedList<T> LinkedList<T>::operator+=(const LinkedList& other) {
 	}
 
 	this->current_size += other.current_size;
-}
+}*/
