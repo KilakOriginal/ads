@@ -46,4 +46,4 @@ A `LinkedList` in this instance, is a double linked list.
 
 ## Miscellaneous Functions
 ### Fibonacci
-`fibonacci(uint n)` calculates and returns the n-th fibonacci number.
+`fibonacci(std::size_t n)` calculates and returns the n-th fibonacci number.
